@@ -12,7 +12,6 @@ public class PersonDao {
             pstmt.setString(1, username);
             try (ResultSet resultSet = pstmt.executeQuery()) {
                 if (resultSet.next()) {
-                    // int id = resultSet.getInt("id");
                     String name = resultSet.getString("name");
                     String last_name = resultSet.getString("last_name");
                     String password = resultSet.getString("password");
@@ -21,7 +20,7 @@ public class PersonDao {
                 }
             }
         } catch (SQLException e) {
-            System.out.println("Hata mesajı: " + e.getMessage());
+            System.out.println("Error message : " + e.getMessage());
         }
         return null;
     }
@@ -34,7 +33,7 @@ public class PersonDao {
                 System.out.println("ID: "+resultSet.getString("id")+" | Name: "+ resultSet.getString("name")+" | User Name : "+resultSet.getString("user_name")+" | Role: "+ resultSet.getString("role"));
             }
         } catch (SQLException e) {
-            System.out.println("hata mesajı " + e.getMessage());
+            System.out.println("Error message : " + e.getMessage());
         }
     }
     public static void addPerson(Person person) {
@@ -53,7 +52,7 @@ public class PersonDao {
                 System.out.println("An error occurred while adding the user.");
             }
         } catch (SQLException e) {
-            System.out.println("Hata mesajı: " + e.getMessage());
+            System.out.println("Error message: " + e.getMessage());
         }
     }
     public static void deletePerson(int personId) {
@@ -68,7 +67,7 @@ public class PersonDao {
                 System.out.println("User is not found .");
             }
         } catch (SQLException e) {
-            System.out.println("Hata mesajı :" + e.getMessage());
+            System.out.println("Error message :" + e.getMessage());
         }
     }
     public static void addUser(Scanner scanner) {
@@ -90,13 +89,12 @@ public class PersonDao {
         Person person = new Person(name, lastName, password, userName, role);
         PersonDao.addPerson(person);
 
-        System.out.println("Kullanıcı başarıyla eklendi.");
+        System.out.println("User added successfully.");
     }
-
     public static void deleteUser(Scanner scanner) {
         System.out.print("Enter the ID of the user to be deleted: ");
         int personId = scanner.nextInt();
-        scanner.nextLine(); // Boş satırı oku
+        scanner.nextLine();
         PersonDao.deletePerson(personId);
     }
     public static Person login(String username, String password) {

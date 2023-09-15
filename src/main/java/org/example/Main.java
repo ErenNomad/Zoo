@@ -15,59 +15,58 @@ public class Main {
             if (loggedInUser == null) {
                 loggedInUser = performLogin(scanner);
                 if (loggedInUser != null) {
-                    System.out.println("Giriş başarılı!");
+                    System.out.println("Login successful!");
                 } else {
-                    System.out.println("Kullanıcı girişi başarısız. Tekrar deneyin.");
+                    System.out.println("User login failed. Try again.");
                 }
             }
 
             if (loggedInUser != null) {
                 loggedInUser = mainMenu(loggedInUser, scanner);
                 if (loggedInUser == null) {
-                    System.out.println("Oturum kapatıldı.");
+                    System.out.println("The session is closed.");
                 }
             }
         }
     }
     public static Person mainMenu(Person loggedInUser, Scanner scanner) {
-        System.out.println("----- Ana Menü -----");
-        System.out.println("1. Kullanıcı İşlemleri");
-        System.out.println("2. Hayvan İşlemleri");
-        System.out.println("3. Oturumu Kapat");
-        System.out.println("4. Çıkış");
-        System.out.print("Seçiminizi yapın: ");
+        System.out.println("----- Main Menu -----");
+        System.out.println("1. User operations");
+        System.out.println("2. Animal operations");
+        System.out.println("3. Sign out");
+        System.out.println("4. Exit the program");
+        System.out.print("Make your choice : ");
         int choice;
         try {
             choice = scanner.nextInt();
-            scanner.nextLine(); // Boş satırı oku
+            scanner.nextLine();
 
             switch (choice) {
                 case 1 -> userMenu(loggedInUser, scanner);
                 case 2 -> animalMenu(loggedInUser, scanner);
-                case 3 -> {return null;} // Oturumu kapat
+                case 3 -> {return null;}
                 case 4 -> {
-                    System.out.println("Çıkış yapılıyor...");
-                    System.exit(0); // Programı sonlandırır
+                    System.out.println("Checking out...");
+                    System.exit(0);
                 }
-                default -> System.out.println("Geçersiz seçim. Tekrar deneyin.");
+                default -> System.out.println("Invalid selection. Try again.");
             }
         } catch (InputMismatchException e) {
-            System.out.println("Geçersiz giriş. Lütfen sayı girin.");
-            scanner.nextLine(); // Geçersiz girişi temizle
+            System.out.println("Invalid login. Please enter number.");
+            scanner.nextLine();
         }
         return loggedInUser;
     }
-    //kullanıcı işlemleri menüsü
     public static void userMenu(Person loggedInUser, Scanner scanner) {
         if (loggedInUser.getRole().equals("ADMIN")) {
             boolean userMenuLoop = true;
             while (userMenuLoop) {
-                System.out.println("----- Kullanıcı İşlemleri -----");
-                System.out.println("1. Kullanıcıları Görüntüle");
-                System.out.println("2. Kullanıcı Ekle");
-                System.out.println("3. Kullanıcı Sil");
-                System.out.println("4. Geri Dön");
-                System.out.print("Seçiminizi yapın: ");
+                System.out.println("----- User Operations -----");
+                System.out.println("1. View Users");
+                System.out.println("2. Add User");
+                System.out.println("3. Delete User");
+                System.out.println("4. Turn back");
+                System.out.print("Make your choice  : ");
                 int choice = scanner.nextInt();
                 scanner.nextLine(); // Consume newline character
                 switch (choice) {
@@ -76,26 +75,25 @@ public class Main {
                     case 3 -> PersonDao.deleteUser(scanner);
                     case 4 -> {
                         userMenuLoop = false;
-                        System.out.println("Ana menüye dönülüyor...");
+                        System.out.println("Returning to the main menu...");
                     }
-                    default -> System.out.println("Geçersiz seçim. Tekrar deneyin.");
+                    default -> System.out.println("Invalid selection. Try again.");
                 }
                 System.out.println();
             }
         } else {
-            System.out.println("Bu menüye erişim izniniz bulunmamaktadır.");
+            System.out.println("You do not have permission to access this menu.");
         }
     }
-    //hayvanlarla ilgili menü
     public static void animalMenu(Person loggedInUser, Scanner scanner) {
         boolean animalMenuLoop = true;
         while (animalMenuLoop) {
-            System.out.println("----- Hayvan İşlemleri -----");
-            System.out.println("1. Hayvanları Görüntüle");
-            System.out.println("2. Hayvan Ekle");
-            System.out.println("3. Hayvandan Sesi çıkar");
-            System.out.println("4. Geri Dön");
-            System.out.print("Seçiminizi yapın: ");
+            System.out.println("----- Animal Operations -----");
+            System.out.println("1. View Animals");
+            System.out.println("2. Add Animal");
+            System.out.println("3. Make a Sound from an Animal");
+            System.out.println("4. Turn Back");
+            System.out.print("Make your choice : ");
             int choice = scanner.nextInt();
             scanner.nextLine();
             switch (choice) {
@@ -104,15 +102,15 @@ public class Main {
                     if (loggedInUser.getRole().equals("ADMIN")) {
                         AnimalDao.addAnimal(scanner);
                     } else {
-                        System.out.println("Bu işlem için yetkiniz bulunmamaktadır.");
+                        System.out.println("You are not authorized for this operation.");
                     }
                 }
                 case 3 -> AnimalDao.animalMakeNoise(scanner);
                 case 4 -> {
                     animalMenuLoop = false;
-                    System.out.println("Ana menüye dönülüyor...");
+                    System.out.println("Returning to the main menu...");
                 }
-                default -> System.out.println("Geçersiz seçim. Tekrar deneyin.");
+                default -> System.out.println("Invalid selection. Try again.");
             }
             System.out.println();
         }

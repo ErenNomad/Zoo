@@ -13,7 +13,7 @@ public class AnimalDao {
                 System.out.println("ID: " + resultSet.getString("id") + " | İsim: " + resultSet.getString("name"));
             }
         } catch (SQLException e) {
-            System.out.println("hata mesajı " + e.getMessage());
+            System.out.println("Error message :" + e.getMessage());
         }
     }
 
@@ -26,47 +26,47 @@ public class AnimalDao {
             pstmt.setString(3, animal.getHungryState());
             int rowsAffected = pstmt.executeUpdate();
             if (rowsAffected > 0) {
-                System.out.println("Kullanıcı başarıyla eklendi.");
+                System.out.println("User added successfully.");
             } else {
-                System.out.println("Kullanıcı eklenirken bir hata oluştu.");
+                System.out.println("An error occurred while adding the user.");
             }
         } catch (SQLException e) {
-            System.out.println("Hata mesajı: " + e.getMessage());
+            System.out.println("Error message : " + e.getMessage());
         }
     }
     public static void addAnimal(Scanner scanner) {
-        System.out.print("Hayvan Adı: ");
+        System.out.print("Animal Name : ");
         String name = scanner.nextLine();
 
-        System.out.print("Hayvan Ses: ");
+        System.out.print("Animal Voice : ");
         String animalVoice = scanner.nextLine();
 
-        System.out.print("Açlık Durumu (Y/N): ");
+        System.out.print("Hunger Situation (Y/N): ");
         String hungryState = scanner.nextLine();
 
         Animal animal = new Animal(name, animalVoice, hungryState);
         AnimalDao.addAnimal(animal);
 
-        System.out.println("Hayvan başarıyla eklendi.");
+        System.out.println("Animal added successfully.");
     }
     public static void makeNoise(int animalId) {
         String query = "SELECT * FROM animal WHERE id = ?";
         try (Connection conn = DataBaseConnection.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(query)) {
-            pstmt.setInt(1, animalId); // Parametreyi ayarla
+            pstmt.setInt(1, animalId);
             try (ResultSet resultSet = pstmt.executeQuery()) {
                 while (resultSet.next()) {
                     System.out.println(resultSet.getString("name") + " Ses çıkarıyor: " + resultSet.getString("voice"));
                 }
             }
         } catch (SQLException e) {
-            System.out.println("Hata mesajı: " + e.getMessage());
+            System.out.println("Error message : " + e.getMessage());
         }
     }
     public static void animalMakeNoise(Scanner scanner) {
-        System.out.print("Hangi hayvanı seçiyorsunuz: ");
+        System.out.print("Which animal do you choose : ");
         int animalId = scanner.nextInt();
-        scanner.nextLine(); // Boş satırı oku
+        scanner.nextLine();
         AnimalDao.makeNoise(animalId);
     }
 }

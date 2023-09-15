@@ -5,6 +5,6 @@ public class Visitor extends Person{
         super(name, lastname, password, userName, role);
     }
     public static void look(){
-        System.out.println("Hayvanlara bakılıyor");
+        System.out.println("animals are cared for");
     };
 }

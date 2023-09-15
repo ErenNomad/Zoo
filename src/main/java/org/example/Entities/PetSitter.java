@@ -6,6 +6,6 @@ public class PetSitter extends Person{
         super(name, lastname, password, userName, role);
     }
     public static void Feeding(){
-        System.out.println("Hayvan besleniyor");
+        System.out.println("Feeding");
     };
 }
